@@ -2,7 +2,7 @@
   "author": "Mikeal Rogers <mikeal.rogers@gmail.com> (http://www.futurealoof.com)",
   "name": "oauth-sign",
   "description": "OAuth 1 signing. Formerly a vendor lib in mikeal/request, now a standalone module.",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "repository": {
     "url": "https://github.com/mikeal/oauth-sign"
   },
@@ -13,5 +13,7 @@
   "engines": {
     "node": "*"
   },
-  "scripts": { "test": "node test.js" }
+  "scripts": {
+    "test": "node test.js"
+  }
 }
