@@ -25,7 +25,7 @@ function hmacsign (httpMethod, base_uri, params, consumer_secret, token_secret) 
   // e.g. c2 < c@, but c2 > c%40.
   var querystring = Object.keys(params).sort(function(a, b){
     // simplified compare function because keys are unique
-    return rfc3986(a) > rfc3986(b) ? 1 : 0
+    return (rfc3986(a) > rfc3986(b)) ? 1 : -1
   }).reduce(function(map, key){
     // querystring builds value as an array for same keys
     // e.g. 'a3=a&c2&a3=2+q' becomes { a3: ['2 q', 'a'], c2: '' }
