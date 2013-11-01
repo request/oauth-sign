@@ -93,7 +93,7 @@ function rsasign (httpMethod, base_uri, params, private_key, token_secret) {
   return rsa(key, base)
 }
 
-function sign (signMethod, httpMethod, base_uri, params, private_key, token_secret) {
+function sign (signMethod, httpMethod, base_uri, params, consumer_secret, token_secret) {
   var method
 
   switch (signMethod) {
