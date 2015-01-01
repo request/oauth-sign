@@ -93,6 +93,15 @@ function rsasign (httpMethod, base_uri, params, private_key, token_secret) {
   return rsa(key, base)
 }
 
+function plaintext (httpMethod, base_uri, params, consumer_secret, token_secret) {
+  var key = [
+    consumer_secret || '',
+    token_secret || ''
+  ].map(rfc3986).join('&')
+
+  return key
+}
+
 function sign (signMethod, httpMethod, base_uri, params, consumer_secret, token_secret) {
   var method
 
@@ -103,6 +112,9 @@ function sign (signMethod, httpMethod, base_uri, params, consumer_secret, token_
     case 'HMAC-SHA1':
       method = hmacsign
       break
+    case 'PLAINTEXT':
+      method = plaintext
+      break
     default:
      throw new Error("Signature method not supported: " + signMethod)
   }
@@ -112,5 +124,6 @@ function sign (signMethod, httpMethod, base_uri, params, consumer_secret, token_
 
 exports.hmacsign = hmacsign
 exports.rsasign = rsasign
+exports.plaintext = plaintext
 exports.sign = sign
 exports.rfc3986 = rfc3986
