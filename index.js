@@ -93,7 +93,7 @@ function rsasign (httpMethod, base_uri, params, private_key, token_secret) {
   return rsa(key, base)
 }
 
-function plaintext (httpMethod, base_uri, params, consumer_secret, token_secret) {
+function plaintext (consumer_secret, token_secret) {
   var key = [
     consumer_secret || '',
     token_secret || ''
@@ -104,6 +104,7 @@ function plaintext (httpMethod, base_uri, params, consumer_secret, token_secret)
 
 function sign (signMethod, httpMethod, base_uri, params, consumer_secret, token_secret) {
   var method
+  var skipArgs = 1
 
   switch (signMethod) {
     case 'RSA-SHA1':
@@ -114,12 +115,13 @@ function sign (signMethod, httpMethod, base_uri, params, consumer_secret, token_
       break
     case 'PLAINTEXT':
       method = plaintext
+      skipArgs = 4
       break
     default:
      throw new Error("Signature method not supported: " + signMethod)
   }
 
-  return method.apply(null, [].slice.call(arguments, 1))
+  return method.apply(null, [].slice.call(arguments, skipArgs))
 }
 
 exports.hmacsign = hmacsign
