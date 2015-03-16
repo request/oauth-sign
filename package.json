@@ -3,6 +3,7 @@
   "name": "oauth-sign",
   "description": "OAuth 1 signing. Formerly a vendor lib in mikeal/request, now a standalone module.",
   "version": "0.6.1",
+  "license": "Apache-2.0",
   "repository": {
     "url": "https://github.com/mikeal/oauth-sign"
   },
@@ -15,6 +16,5 @@
   },
   "scripts": {
     "test": "node test.js"
-  },
-  "license": "Apache 2.0"
+  }
 }
