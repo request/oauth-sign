@@ -1,20 +1,24 @@
 {
   "author": "Mikeal Rogers <mikeal.rogers@gmail.com> (http://www.futurealoof.com)",
   "name": "oauth-sign",
-  "description": "OAuth 1 signing. Formerly a vendor lib in mikeal/request, now a standalone module.",
+  "description": "OAuth 1 signing. Formerly a vendor lib in request/request, now a standalone module.",
   "version": "0.6.1",
   "license": "Apache-2.0",
   "repository": {
-    "url": "https://github.com/mikeal/oauth-sign"
+    "url": "https://github.com/request/oauth-sign"
   },
   "main": "index.js",
   "dependencies": {},
-  "devDependencies": {},
+  "devDependencies": {
+    "tape": "~4.0.0",
+    "istanbul": "0.3.14"
+  },
   "optionalDependencies": {},
   "engines": {
     "node": "*"
   },
   "scripts": {
-    "test": "node test.js"
+    "test": "tape test.js",
+    "cover": "./node_modules/.bin/istanbul cover ./node_modules/tape/bin/tape test.js"
   }
 }
