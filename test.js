@@ -118,13 +118,13 @@ tape('rfc5849 RSA example', function(t) {
   params.oauth_consumer_key = '9djdj82h48djs9d2'
   params.oauth_token = 'kkk9d7dh3k39sjv7'
   params.oauth_nonce = '7d8f3e4a'
-  params.oauth_signature_method = 'HMAC-SHA1'
+  params.oauth_signature_method = 'RSA-SHA1'
   params.oauth_timestamp = '137131201'
 
-  var rfc5849sign = hmacsign('POST', 'http://example.com/request',
+  var rfc5849sign = rsasign('POST', 'http://example.com/request',
     params, rsa_private_pem)
 
-  t.equal(rfc5849sign, 'MkSr5jidu+Vf+0wpeO+rrqwgwj8=')
+  t.equal(rfc5849sign, 'Bqok90c5M9gPqjsxJ61crI7IXcZHyVIe3HluLFlMSWBqbPcj8cJFmcbxauErNBAPfpQ8CD5UpION3ZETca6ETnPbyMt/f2eMlmh1fNe3N/V7bAjpardOLdCLmcC65+vkI2c3lcDtiy5cCFZQDEdOdHw7SgoxMKStVEuDI9QNwss=')
   t.end()
 })
 
