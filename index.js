@@ -1,6 +1,4 @@
-var crypto = require('crypto')
-  , qs = require('querystring')
-  ;
+var crypto = require('crypto');
 
 function sha1 (key, body) {
   return crypto.createHmac('sha1', key).update(body).digest('base64')
