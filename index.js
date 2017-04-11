@@ -2,8 +2,8 @@ var crypto = require('crypto')
   , qs = require('querystring')
   ;
 
-function sha1 (key, body) {
-  return crypto.createHmac('sha1', key).update(body).digest('base64')
+function sha (key, body, algorithm) {
+  return crypto.createHmac(algorithm, key).update(body).digest('base64')
 }
 
 function rsa (key, body) {
@@ -86,7 +86,17 @@ function hmacsign (httpMethod, base_uri, params, consumer_secret, token_secret) 
     token_secret || ''
   ].map(rfc3986).join('&')
 
-  return sha1(key, base)
+  return sha(key, base, 'sha1')
+}
+
+function hmacsign256 (httpMethod, base_uri, params, consumer_secret, token_secret) {
+  var base = generateBase(httpMethod, base_uri, params)
+  var key = [
+    consumer_secret || '',
+    token_secret || ''
+  ].map(rfc3986).join('&')
+
+  return sha(key, base, 'sha256')
 }
 
 function rsasign (httpMethod, base_uri, params, private_key, token_secret) {
@@ -116,6 +126,9 @@ function sign (signMethod, httpMethod, base_uri, params, consumer_secret, token_
     case 'HMAC-SHA1':
       method = hmacsign
       break
+    case 'HMAC-SHA256':
+      method = hmacsign256
+      break;
     case 'PLAINTEXT':
       method = plaintext
       skipArgs = 4
@@ -128,9 +141,9 @@ function sign (signMethod, httpMethod, base_uri, params, consumer_secret, token_
 }
 
 exports.hmacsign = hmacsign
+exports.hmacsign256 = hmacsign256
 exports.rsasign = rsasign
 exports.plaintext = plaintext
 exports.sign = sign
 exports.rfc3986 = rfc3986
 exports.generateBase = generateBase
-
