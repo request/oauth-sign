@@ -1,11 +1,11 @@
-var crypto = require('crypto');
+var crypto = require('crypto')
 
 function sha (key, body, algorithm) {
   return crypto.createHmac(algorithm, key).update(body).digest('base64')
 }
 
 function rsa (key, body) {
-  return crypto.createSign("RSA-SHA1").update(body).sign(key, 'base64');
+  return crypto.createSign('RSA-SHA1').update(body).sign(key, 'base64')
 }
 
 function rfc3986 (str) {
@@ -15,7 +15,6 @@ function rfc3986 (str) {
     .replace(/\(/g,'%28')
     .replace(/\)/g,'%29')
     .replace(/'/g,'%27')
-    ;
 }
 
 // Maps object to bi-dimensional array
@@ -28,9 +27,9 @@ function map (obj) {
     if (Array.isArray(val))
       for (var i = 0; i < val.length; i++)
         arr.push([key, val[i]])
-    else if (typeof val === "object")
+    else if (typeof val === 'object')
       for (var prop in val)
-        arr.push([key + '[' + prop + ']', val[prop]]);
+        arr.push([key + '[' + prop + ']', val[prop]])
     else
       arr.push([key, val])
   }
@@ -126,13 +125,13 @@ function sign (signMethod, httpMethod, base_uri, params, consumer_secret, token_
       break
     case 'HMAC-SHA256':
       method = hmacsign256
-      break;
+      break
     case 'PLAINTEXT':
       method = plaintext
       skipArgs = 4
       break
     default:
-     throw new Error("Signature method not supported: " + signMethod)
+     throw new Error('Signature method not supported: ' + signMethod)
   }
 
   return method.apply(null, [].slice.call(arguments, skipArgs))

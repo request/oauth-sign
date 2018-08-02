@@ -3,7 +3,6 @@ var oauth = require('./index')
   , hmacsign256 = oauth.hmacsign256
   , assert = require('assert')
   , qs = require('querystring')
-  ;
 
 // Tests from Twitter documentation https://dev.twitter.com/docs/auth/oauth
 //===============================================================================================
