@@ -1,4 +1,6 @@
 var crypto = require('crypto')
+  , url = require('url')
+  ;
 
 function sha (key, body, algorithm) {
   return crypto.createHmac(algorithm, key).update(body).digest('base64')
@@ -6,6 +8,17 @@ function sha (key, body, algorithm) {
 
 function rsa (key, body) {
   return crypto.createSign('RSA-SHA1').update(body).sign(key, 'base64')
+}
+
+function excludeDefaultPort (base_uri) {
+  var parsed = url.parse(base_uri);
+  if (parsed.port) {
+    if ((parsed.protocol == "http:" && parsed.port == "80")
+      || (parsed.protocol == "https:" && parsed.port == "443")) {
+      parsed.host = parsed.hostname;
+    }
+  }
+  return url.format(parsed);
 }
 
 function rfc3986 (str) {
@@ -45,6 +58,10 @@ function generateBase (httpMethod, base_uri, params) {
   // adapted from https://dev.twitter.com/docs/auth/oauth and 
   // https://dev.twitter.com/docs/auth/creating-signature
 
+  // Exclude HTTPS for port 443, HTTP for port 80
+  // https://tools.ietf.org/html/rfc5849#section-3.4.1.2
+  var newBaseUri = excludeDefaultPort (base_uri)
+
   // Parameter normalization
   // http://tools.ietf.org/html/rfc5849#section-3.4.1.3.2
   var normalized = map(params)
@@ -69,7 +86,7 @@ function generateBase (httpMethod, base_uri, params) {
 
   var base = [
     rfc3986(httpMethod ? httpMethod.toUpperCase() : 'GET'),
-    rfc3986(base_uri),
+    rfc3986(newBaseUri),
     rfc3986(normalized)
   ].join('&')
 
